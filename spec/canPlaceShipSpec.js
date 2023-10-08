@@ -29,13 +29,25 @@ describe("check canPlaceShip function", function(){
         expect(canPlaceShip(field, 1, 8, false, 3)).toBeFalse();
     })
 
-    it("should not be able do place ship that intersects other ship", function(){
+    it("should not be able do place ship that intersects other ship. test1", function(){
         field[0][0] = 1;
         field[0][1] = 1;
         expect(canPlaceShip(field, 0, 0, false, 2)).toBeFalse();
     })
 
-    it("should not be able do place ship that is too close other ship", function(){
+    it("should not be able do place ship that intersects other ship. test2", function(){
+        field[3][9] = 1;
+        field[4][9] = 1;
+        expect(canPlaceShip(field, 2, 9, true, 3)).toBeFalse();
+    })
+
+    it("should not be able do place ship that is too close other ship. test1", function(){
+        field[9][9] = 1;
+        field[9][8] = 1;
+        expect(canPlaceShip(field, 9, 6, false, 2)).toBeFalse();
+    })
+
+    it("should not be able do place ship that is too close other ship. test2", function(){
         field[3][0] = 1;
         field[3][1] = 1;
         expect(canPlaceShip(field, 4, 2, false, 2)).toBeFalse();

@@ -1,4 +1,5 @@
 import {updateFieldVisuals} from "./functions.mjs";
+import { generateEnemyField } from "./functions.mjs";
 const container = document.getElementById("container");
 
 function makeRows(rows, cols) {
@@ -15,17 +16,5 @@ function makeRows(rows, cols) {
 
 makeRows(10, 10);
 
-let field = [];  
-for (let i = 0; i < 10; i++){
-  let line = [];
-  for (let j = 0; j < 10; j++){
-    line.push(0);
-  }
-  field.push(line);
-}
-
-field[0][0] = 1;
-field[0][1] = 1;
-field[7][7] = 2;
-field[9][8] = 3;
+let field = generateEnemyField();
 updateFieldVisuals(field);

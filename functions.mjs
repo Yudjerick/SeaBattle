@@ -20,10 +20,103 @@ export function canPlaceShip(field, x, y, isHor, size){
   if(!isHor && y + size - 1 > 9){
     return false;
   }
-  for(let i = -1; i <= 1; i++) for(let j = -1; j <= 1; j++){
-    if(x + i >= 0 && x + i< 10 && y + j >= 0 && y + j < 10 && field[x + i][y + j] != 0){
-      return false;
+  if(isHor){
+    for(let k = 0; k < size; k++){
+      for(let i = -1; i <= 1; i++) for(let j = -1; j <= 1; j++){
+        if(x + i + k >= 0 && x + i + k< 10 && y + j >= 0 && y + j < 10 && field[x + i + k][y + j] != 0){
+          return false;
+        }
+      }
+    }
+  }
+  else{
+    for(let k = 0; k < size; k++){
+      for(let i = -1; i <= 1; i++) for(let j = -1; j <= 1; j++){
+        if(x + i >= 0 && x + i< 10 && y + j + k >= 0 && y + j + k < 10 && field[x + i][y + j + k] != 0){
+          return false;
+        }
+      }
+    }
+  }
+  
+  
+  
+  return true;
+}
+
+export function placeShip(field, x, y, isHor, size){
+  if(!canPlaceShip(field, x, y, isHor, size)){
+    return false;
+  }
+  for(let i = 0; i < size; i++){
+    if(isHor){
+      field[x+i][y] = 1;
+    }
+    else{
+      field[x][y+i] = 1;
     }
   }
   return true;
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+export function generateEnemyField(){
+  let result = false;
+  let field = [];
+  for (let i = 0; i < 10; i++){
+    let line = [];
+    for (let j = 0; j < 10; j++){
+      line.push(0);
+    }
+    field.push(line);
+  }
+
+  while(!result){
+    let isHor = Math.random() > 0.5;
+    let x = getRandomInt(10);
+    let y = getRandomInt(10);
+    result = placeShip(field, x, y, isHor, 4)
+  }
+  result = false;
+
+  while(!result){
+    let isHor = Math.random() > 0.5;
+    let x = getRandomInt(10);
+    let y = getRandomInt(10);
+    result = placeShip(field, x, y, isHor,3)
+  }
+  result = false;
+
+  while(!result){
+    let isHor = Math.random() > 0.5;
+    let x = getRandomInt(10);
+    let y = getRandomInt(10);
+    result = placeShip(field, x, y, isHor, 3)
+  }
+  result = false;
+
+  for(let i = 0; i < 3; i++){
+    while(!result){
+      let isHor = Math.random() > 0.5;
+      let x = getRandomInt(10);
+      let y = getRandomInt(10);
+      result = placeShip(field, x, y, isHor, 2)
+    }
+    result = false;
+  }
+
+  for(let i = 0; i < 4; i++){
+    while(!result){
+      let isHor = Math.random() > 0.5;
+
+      let x = getRandomInt(10);
+      let y = getRandomInt(10);
+      result = placeShip(field, x, y, isHor, 1)
+    }
+    result = false;
+  }
+  return field;
 }
